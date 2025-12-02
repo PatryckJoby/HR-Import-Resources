@@ -21,6 +21,6 @@ while (filenname != 'q'):
 
     data.to_csv(filenname)
 
-    print("Success!")
+    print("Success!") # Can take a while to perform above tasks, so input is ready after this message is displayed
 
     filenname = input().strip('"')
