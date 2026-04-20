@@ -18,6 +18,8 @@ while (filenname != 'q'):
         data = data[~(data["idnumber"].isna() | (data["idnumber"] == ""))]
         for name_index in data.index:
             data.loc[name_index, "idnumber"] = data["idnumber"][name_index].lower()
+        for name_index in data.index:
+            data.loc[name_index, "email"] = data["email"][name_index].lower()
 
     data.to_csv(filenname)
 
