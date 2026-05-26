@@ -10,6 +10,17 @@ import HrImport
 
 QUIT_CRITERIA = {"q", "Q", "quit", "Quit", "QUIT", "exit", "Exit", "EXIT"}
 
+def usage() -> None:
+    """
+    Print usage instructions for the CLI.
+    
+    Provides guidance on how to run the script with optional tenant filtering and how to input filenames.
+    """
+    print("Usage: python Main.py [tenant_id ...]")
+    print("Example: python Main.py jbg")
+    print("Then enter CSV filenames to process (enter 'q' to quit)")
+
+
 def main() -> None:
     """
     Interactive CLI for HR file processing with tenant filtering.
@@ -44,6 +55,14 @@ def main() -> None:
             # Search for tenant(s) matching the provided ID (supports filtering/validation by tenant_id)
             # List comprehension filters tenants where tenant_id exactly matches normalized argument
             matches: list[dict[str, str]] = [tenant for tenant in tenants if tenant["tenant_id"] == normalized_arg]
+            
+            if arg == "-h" or arg == "--help":
+                usage()
+                return
+            
+            if arg == "-elephant":
+                print("Address me...")
+                return
             
             # If tenant ID found, append matching configurations; otherwise raise error for invalid input
             if matches:
