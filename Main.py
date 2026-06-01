@@ -72,6 +72,7 @@ def main() -> None:
             if matches:
                 for tenant in matches:
                     use_tenants.append(tenant)
+                    print(f"Selected tenant for processing: {tenant['tenant_name']} (ID: {tenant['tenant_id']})")
             else:
                 raise ValueError(f"Tenant ID '{arg}' not found")
 
