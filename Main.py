@@ -4,7 +4,9 @@ HR data file import CLI.
 Entry point for interactive file processing with tenant selection via command-line arguments.
 Processes multiple CSV files sequentially with tenant-specific splitting and normalization.
 """
+import os
 import sys
+import shutil
 import Tenants
 import HrImport
 
@@ -78,6 +80,14 @@ def main() -> None:
     filename: str = input().strip('"').strip("'")
     
     while filename not in QUIT_CRITERIA:
+        # Backup original files to a separate directory to preserve unmodified data for auditing or reprocessing if needed
+        try:
+            oringial_files_dir = os.path.dirname(filename) + "/original_files"
+            os.makedirs(oringial_files_dir, exist_ok=True)
+            shutil.copy(filename, oringial_files_dir + "/" + "Original " + os.path.basename(filename))
+        except FileNotFoundError as e:
+            print(f"Warning: Failed to backup original file '{filename}' - {e}")
+
         # Instantiate HR import handler for this file and execute transformations with selected tenants
         hr_import: HrImport.HRImport = HrImport.HRImport(filename)
         hr_import.run(use_tenants)
